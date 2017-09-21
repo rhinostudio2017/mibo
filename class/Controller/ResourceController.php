@@ -2,6 +2,11 @@
 
 namespace FS\Controller;
 
+use FS\Common\Exception\DBDuplicationException;
+use FS\Common\Exception\InvalidParameterException;
+use FS\Common\IO;
+use FS\Model\Resource;
+
 class ResourceController extends Controller
 {
     #region Actions
@@ -9,20 +14,41 @@ class ResourceController extends Controller
     {
         $this->auth->hasPermission(['write']);
 
-        if (!($validation = IO::required($this->data, ['ftpUser', 'fileName']))['valid']) {
+        if (!($validation = IO::required($this->data, ['name', 'posterLink', 'videoLink']))['valid']) {
             throw new InvalidParameterException($validation['message']);
         }
 
-        $ftp = new FTPLog($this->data);
+        $resource = new Resource($this->data);
 
-        // Insert ftp log for customer
-        $sql = "INSERT INTO `ftp`(`ftp_user`, `file_name`) VALUES(:ftp_user, :file_name)";
+        // Check duplication
+        $sql = "SELECT COUNT(*) FROM `resource` WHERE `video_link` = :video_link";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute(['video_link' => $resource->getVideoLink()]);
+
+        if ($stmt->fetchColumn() != 0) {
+            $this->responseArr['status']  = 'error';
+            $this->responseArr['message'] = 'Video with link {' . $resource->getVideoLink() . '} already existed';
+            return $this->responseArr;
+        }
+
+        // Insert resource item
+        $sql = "INSERT INTO `resource`(`name`, `description`, `poster_link`, `video_link`, `author`, `produce_time`, `venue`, `views`, `note`) 
+                VALUES(:name, :description, :poster_link, :video_link, :author, :produce_time, :venue, :views, :note)";
 
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute([
-            'ftp_user'  => $ftp->getFTPUser(),
-            'file_name' => $ftp->getFileName()
+            'name'         => $resource->getName(),
+            'description'  => $resource->getDescription(),
+            'poster_link'  => $resource->getPosterLink(),
+            'video_link'   => $resource->getVideoLink(),
+            'author'       => $resource->getAuthor(),
+            'produce_time' => $resource->getProduceTime(),
+            'venue'        => $resource->getVenue(),
+            'views'        => $resource->getViews(),
+            'note'         => $resource->getNote()
         ]);
 
         $this->responseArr['data'] = [
@@ -34,14 +60,96 @@ class ResourceController extends Controller
 
     public function update()
     {
+        $this->auth->hasPermission(['write']);
+
+        if (!($validation = IO::required($this->data, ['id']))['valid']) {
+            throw new InvalidParameterException($validation['message']);
+        }
+
+        $resource = new Resource($this->data);
+
+        // Insert resource item
+        $sql = "UPDATE `resource` 
+                SET `name` = :name, `description` = :description, `poster_link` = :poster_link, 
+                    `video_link` = :video_link, `author` = :author, `produce_time` = :produce_time, 
+                    `venue` = :venue, `views` = :views, `note` = :note
+                WHERE `id` = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            'id'           => $resource->getId(),
+            'name'         => $resource->getName(),
+            'description'  => $resource->getDescription(),
+            'poster_link'  => $resource->getPosterLink(),
+            'video_link'   => $resource->getVideoLink(),
+            'author'       => $resource->getAuthor(),
+            'produce_time' => $resource->getProduceTime(),
+            'venue'        => $resource->getVenue(),
+            'views'        => $resource->getViews(),
+            'note'         => $resource->getNote()
+        ]);
+
+        return $this->responseArr;
     }
 
     public function delete()
     {
+        $this->auth->hasPermission(['write']);
+
+        if (!($validation = IO::required($this->data, ['id']))['valid']) {
+            throw new InvalidParameterException($validation['message']);
+        }
+
+        $resource = new Resource($this->data);
+
+        // Insert resource item
+        $sql = "DELETE FROM `resource` WHERE `id` = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute(['id' => $resource->getId()]);
+
+        return $this->responseArr;
     }
 
     public function getById()
     {
+        $this->auth->hasPermission(['read']);
+
+        if (!($validation = IO::required($this->data, ['id']))['valid']) {
+            throw new InvalidParameterException($validation['message']);
+        }
+
+        $resource = new Resource($this->data);
+
+        // Insert resource item
+        $sql = "SELECT * FROM `resource` WHERE `id` = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute(['id' => $resource->getId()]);
+
+        if (!($row = $stmt->fetch())) {
+            $this->responseArr['status']  = 'error';
+            $this->responseArr['message'] = 'Video with id {' . $resource->getId() . '} can NOT be found';
+            return $this->responseArr;
+        }
+
+        $this->responseArr['data'] = [
+            'id'           => $row['id'],
+            'name'         => $row['name'],
+            'description'  => $row['description'],
+            'poster_link'  => $row['poster_link'],
+            'video_link'   => $row['video_link'],
+            'author'       => $row['author'],
+            'produce_time' => $row['produce_time'],
+            'venue'        => $row['venue'],
+            'views'        => $row['views'],
+            'note'         => $row['note']
+        ];
+
+        return $this->responseArr;
     }
 
     public function search()

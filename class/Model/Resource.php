@@ -19,6 +19,57 @@ class Resource
     private $note        = '';
     #endregion
 
+    #region Construct
+    public function __construct($data)
+    {
+        if (!is_array($data)) {
+            throw new InvalidParameterException('Passed in parameters must be array format');
+        }
+
+        if (isset($data['id'])) {
+            $this->setId($data['id']);
+        }
+
+        if (isset($data['name'])) {
+            $this->setName($data['name']);
+        }
+
+        if (isset($data['description'])) {
+            $this->setDescription($data['description']);
+        }
+
+        if (isset($data['posterLink'])) {
+            $this->setPosterLink($data['posterLink']);
+        }
+
+        if (isset($data['videoLink'])) {
+            $this->setVideoLink($data['videoLink']);
+        }
+
+        if (isset($data['author'])) {
+            $this->setAuthor($data['author']);
+        }
+
+        if (isset($data['produceTime'])) {
+            $this->setProduceTime($data['produceTime']);
+        } else {
+            $this->setProduceTime((new \DateTime())->format('Y-m-d H:i:s'));
+        }
+
+        if (isset($data['venue'])) {
+            $this->setVenue($data['venue']);
+        }
+
+        if (isset($data['views'])) {
+            $this->setViews($data['views']);
+        }
+
+        if (isset($data['note'])) {
+            $this->setNote($data['note']);
+        }
+    }
+    #endregion
+
     #region Getters & Setters
     public function getId()
     {

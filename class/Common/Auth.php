@@ -29,14 +29,14 @@ class Auth
     }
 
     #region Methods
-    public function hasPermission($securable) {
+    public function hasPermission($secure) {
 
         if (!isset($this->token) || empty($this->token) || ($permissions = $this->authenticate()) === false) {
             http_response_code(401);
             exit();
         }
 
-        foreach ($securable as $permission) {
+        foreach ($secure as $permission) {
             if ($permissions[$permission] != 1) {
                 http_response_code(403);
                 exit();

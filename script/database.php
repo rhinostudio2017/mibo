@@ -48,6 +48,7 @@ $sql = "CREATE TABLE IF NOT EXISTS `resource` (
             PRIMARY KEY (`id`),
             INDEX `idx_time` (`produce_time`),
             INDEX `idx_views` (`views`),
+            UNIQUE INDEX `unique_video_link` (`video_link`),
             FULLTEXT INDEX `ft_description` (`description`),
             FULLTEXT INDEX `ft_venue` (`venue`)
         ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4";

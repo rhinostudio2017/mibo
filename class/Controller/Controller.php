@@ -14,7 +14,7 @@ abstract class Controller
     protected $pdo;
     protected $data;
 
-    public function __construct($connection = null, $secure = null)
+    public function __construct($connection = MIBO_CONNECTION, $secure = null)
     {
         $this->responseArr = IO::initResponseArray();
         $this->auth        = new Auth();

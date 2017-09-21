@@ -20,7 +20,7 @@ $router->group('/resource/', function () {
     $this->post('remove', function () {
         return (new \FS\Controller\ResourceController())->delete();
     });
-    $this->post('fetchById', function () {
+    $this->post('fetch-by-id', function () {
         return (new \FS\Controller\ResourceController())->getById();
     });
     $this->post('fetch', function () {
