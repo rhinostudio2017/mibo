@@ -12,19 +12,22 @@ $router = new Router();
 // API - Holiday
 $router->group('/resource/', function () {
     $this->post('add', function () {
-        return (new \FS\Controller\ResourceController())->create();
+        return (new \FS\API\Controller\ResourceController())->create();
     });
     $this->post('edit', function () {
-        return (new \FS\Controller\ResourceController())->update();
+        return (new \FS\API\Controller\ResourceController())->update();
     });
     $this->post('remove', function () {
-        return (new \FS\Controller\ResourceController())->delete();
+        return (new \FS\API\Controller\ResourceController())->delete();
+    });
+    $this->post('exist', function () {
+        return (new \FS\API\Controller\ResourceController())->checkExist();
     });
     $this->post('fetch-by-id', function () {
-        return (new \FS\Controller\ResourceController())->getById();
+        return (new \FS\API\Controller\ResourceController())->getById();
     });
     $this->post('fetch', function () {
-        return (new \FS\Controller\ResourceController())->search();
+        return (new \FS\API\Controller\ResourceController())->search();
     });
 });
 

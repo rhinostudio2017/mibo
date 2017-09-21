@@ -1,11 +1,10 @@
 <?php
 
-namespace FS\Controller;
+namespace FS\API\Controller;
 
-use FS\Common\Exception\DBDuplicationException;
 use FS\Common\Exception\InvalidParameterException;
 use FS\Common\IO;
-use FS\Model\Resource;
+use FS\API\Model\Resource;
 
 class ResourceController extends Controller
 {
@@ -21,13 +20,8 @@ class ResourceController extends Controller
         $resource = new Resource($this->data);
 
         // Check duplication
-        $sql = "SELECT COUNT(*) FROM `resource` WHERE `video_link` = :video_link";
 
-        $stmt = $this->pdo->prepare($sql);
-
-        $stmt->execute(['video_link' => $resource->getVideoLink()]);
-
-        if ($stmt->fetchColumn() != 0) {
+        if ($this->_checkExist()) {
             $this->responseArr['status']  = 'error';
             $this->responseArr['message'] = 'Video with link {' . $resource->getVideoLink() . '} already existed';
             return $this->responseArr;
@@ -154,6 +148,35 @@ class ResourceController extends Controller
 
     public function search()
     {
+    }
+
+    public function checkExist()
+    {
+        $this->auth->hasPermission(['read']);
+
+        $this->responseArr['data'] = ['exist' => $this->_checkExist() ? 1 : 0];
+
+        return $this->responseArr;
+    }
+    #endregion
+
+    #region Utils
+    // Check resource duplication based on video_link
+    private function _checkExist()
+    {
+        if (!($validation = IO::required($this->data, ['videoLink']))['valid']) {
+            throw new InvalidParameterException($validation['message']);
+        }
+
+        $resource = new Resource($this->data);
+
+        $sql = "SELECT COUNT(*) FROM `resource` WHERE `video_link` = :video_link";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute(['video_link' => $resource->getVideoLink()]);
+
+        return $stmt->fetchColumn() != 0;
     }
     #endregion
 }

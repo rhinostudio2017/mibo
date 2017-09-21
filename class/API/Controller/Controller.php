@@ -1,6 +1,6 @@
 <?php
 
-namespace FS\Controller;
+namespace FS\API\Controller;
 
 use FS\Common\Auth;
 use FS\Common\Exception\InvalidParameterException;

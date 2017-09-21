@@ -1,6 +1,6 @@
 <?php
 
-namespace FS\Model;
+namespace FS\API\Model;
 
 use FS\Common\Exception\InvalidParameterException;
 
