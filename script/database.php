@@ -37,7 +37,7 @@ if ($pdo === null) {
 $sql = "CREATE TABLE IF NOT EXISTS `resource` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `name` VARCHAR(64) NOT NULL DEFAULT '',
-            `description` VARCHAR(256) NULL DEFAULT NULL,
+            `description` VARCHAR(256) NOT NULL DEFAULT '',
             `poster_link` VARCHAR(64) NOT NULL DEFAULT '',
             `video_link` VARCHAR(64) NOT NULL DEFAULT '',
             `author` VARCHAR(32) NOT NULL DEFAULT '',
@@ -50,6 +50,24 @@ $sql = "CREATE TABLE IF NOT EXISTS `resource` (
             INDEX `idx_views` (`views`),
             FULLTEXT INDEX `ft_description` (`description`),
             FULLTEXT INDEX `ft_venue` (`venue`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4";
+
+if ($pdo->exec($sql) === false) {
+    die('Error: SQL statement error. Check your sql statement {' . $sql . '}');
+}
+
+// Create table 'token' if not exists
+$sql = "CREATE TABLE `token` (
+            `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `name` VARCHAR(50) NOT NULL DEFAULT '',
+            `key` VARCHAR(36) NOT NULL DEFAULT '',
+            `read` TINYINT(1) NOT NULL DEFAULT '0',
+            `write` TINYINT(1) NOT NULL DEFAULT '0',
+            `allow` VARCHAR(255) NOT NULL DEFAULT '',
+            `expire` DATETIME NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE INDEX `name` (`name`),
+            UNIQUE INDEX `key` (`key`)
         ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4";
 
 if ($pdo->exec($sql) === false) {

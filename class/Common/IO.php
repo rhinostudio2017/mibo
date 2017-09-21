@@ -62,7 +62,7 @@ class IO
         $process = proc_open($cmd, $descriptorSpec, $pipes);
 
         if (!is_resource($process)) {
-            throw new Exception('Error opening command process');
+            throw new \Exception('Error opening command process');
         }
 
         fwrite($pipes[0], $stdIn);
@@ -100,15 +100,6 @@ class IO
         }
 
         return $input;
-    }
-
-    public static function default($haystack, $needle, $default = null)
-    {
-        if (is_numeric($default)) {
-            return (isset($haystack[$needle]) && is_numeric($haystack[$needle])) ? intval($haystack[$needle]) : $default;
-        } else {
-            return (isset($haystack[$needle]) && !is_null($haystack[$needle])) ? $haystack[$needle] : $default;
-        }
     }
 
     public static function required($data, $mandatory = null, $strict = false)
@@ -163,7 +154,7 @@ class IO
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
             return $pdo;
-        } catch(\PDOExecption $e) {
+        } catch(\PDOException $e) {
             return false;
         }
     }
