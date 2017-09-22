@@ -141,6 +141,18 @@ class IO
         return $retValue;
     }
 
+    public static function getValueWithDefault($haystack, $needle, $default = null)
+    {
+        if (is_array($haystack)) {
+            return $haystack[$needle] ?? $default;
+            //return isset($haystack[$needle]) ? $haystack[$needle] : $default;
+        } elseif (is_object($haystack)) {
+            return $haystack->{$needle} ?? $default;
+        } else {
+            return $default;
+        }
+    }
+
     public static function getPDOConnection($connection)
     {
         if (!is_array($connection) || !isset($connection['dns']) || !isset($connection['username']) || !isset($connection['password'])) {
@@ -154,15 +166,15 @@ class IO
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
             return $pdo;
-        } catch(\PDOException $e) {
+        } catch (\PDOException $e) {
             return false;
         }
     }
 
     public static function message($msg, $object = null, $die = false)
     {
-        echo '[' .  date('Y-m-d H:i:s') . ']' . $msg . PHP_EOL;
-        
+        echo '[' . date('Y-m-d H:i:s') . ']' . $msg . PHP_EOL;
+
         if (!empty($object)) {
             print_r($object);
             echo PHP_EOL;

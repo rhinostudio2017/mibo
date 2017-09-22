@@ -148,6 +148,76 @@ class ResourceController extends Controller
 
     public function search()
     {
+        $this->auth->hasPermission(['read']);
+
+        $offset    = IO::getValueWithDefault($this->data, 'offset', 0);
+        $limit     = IO::getValueWithDefault($this->data, 'limit', 20);
+        $startTime = IO::getValueWithDefault($this->data, 'startTime');
+        $endTime   = IO::getValueWithDefault($this->data, 'endTime');
+        $keyword  = IO::getValueWithDefault($this->data, 'keyword');
+        $orders   = [IO::getValueWithDefault($this->data, 'order')];
+        $orders[] = 'produce_time';
+
+        //Construct SQL statement
+        $sql = "SELECT * FROM `resource` ";
+
+        $whereClause = '';
+        $parameters  = [];
+
+        if (!empty($startTime)) {
+            $whereClause             = $this->appendSearch($whereClause, '`produce_time` >= :startTime');
+            $parameters['startTime'] = (new \DateTime($startTime))->format('Y-m-d H:i:s');
+        }
+
+        if (!empty($endTime)) {
+            $whereClause           = $this->appendSearch($whereClause, '`produce_time` <= :endTime');
+            $parameters['endTime'] = (new \DateTime($startTime))->format('Y-m-d H:i:s');
+        }
+
+        if (!empty($keyword)) {
+            $whereClause = $this->appendSearch($whereClause, 'MATCH(`name`, `author`, `description`, `venue`) AGAINST(:keyword)');
+            $keywordArr  = explode(',', $keyword);
+            $keywords    = '';
+            foreach ($keywordArr as $word) {
+                $keywords .= '"' . $word . '" ';
+            }
+            $keywords              = substr($keywords, 0, -1);
+            $parameters['keyword'] = $keywords;
+        }
+
+        $orderClause = 'ORDER BY ';
+        foreach ($orders as $order) {
+            if (!empty($order)) {
+                $orderClause .= $order . ' DESC,';
+            }
+        }
+        $orderClause = substr($orderClause, 0, -1);
+
+        // Retrieve total row counters
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM `resource` " . $whereClause);
+
+        $stmt->execute($parameters);
+
+        $rowCount = $stmt->fetchColumn(0);
+
+        // Retrieve validated rows
+        $sql .= $whereClause . ' ' . $orderClause . ' LIMIT :offset, :limit';
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->bindParam('offset', $offset, \PDO::PARAM_INT);
+        $stmt->bindParam('limit', $limit, \PDO::PARAM_INT);
+
+        $stmt = $this->bindParams($stmt, $parameters);
+
+        $stmt->execute();
+
+        $this->responseArr['data'] = [
+            'totalRowCount' => $rowCount,
+            'rows'          => $stmt->fetchAll()
+        ];
+
+        return $this->responseArr;
     }
 
     public function checkExist()

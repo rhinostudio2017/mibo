@@ -49,8 +49,7 @@ $sql = "CREATE TABLE IF NOT EXISTS `resource` (
             INDEX `idx_time` (`produce_time`),
             INDEX `idx_views` (`views`),
             UNIQUE INDEX `unique_video_link` (`video_link`),
-            FULLTEXT INDEX `ft_description` (`description`),
-            FULLTEXT INDEX `ft_venue` (`venue`)
+            FULLTEXT INDEX `ft_name_author_description_venue` (`name`, `author`, `description`, `venue`)
         ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4";
 
 if ($pdo->exec($sql) === false) {
@@ -58,7 +57,7 @@ if ($pdo->exec($sql) === false) {
 }
 
 // Create table 'token' if not exists
-$sql = "CREATE TABLE `token` (
+$sql = "CREATE TABLE IF NOT EXISTS `token` (
             `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
             `name` VARCHAR(50) NOT NULL DEFAULT '',
             `key` VARCHAR(36) NOT NULL DEFAULT '',
