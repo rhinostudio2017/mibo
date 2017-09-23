@@ -19,7 +19,21 @@ class User
             throw new InvalidParameterException('Passed in parameters must be array format');
         }
 
+        if (isset($data['id'])) {
+            $this->setId($data['id']);
+        }
 
+        if (isset($data['username'])) {
+            $this->setUsername($data['username']);
+        }
+
+        if (isset($data['password'])) {
+            $this->setPassword($data['password']);
+        }
+
+        if (isset($data['email'])) {
+            $this->setEmail($data['email']);
+        }
     }
     #endregion
 

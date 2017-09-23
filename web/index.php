@@ -37,7 +37,7 @@ $router->group('/api/resource/', function () {
 });
 
 // user
-$router->group('/user/', function () {
+$router->group('/api/user/', function () {
     $this->post('login', function () {
         return (new \FS\API\Controller\UserController())->login();
     });
