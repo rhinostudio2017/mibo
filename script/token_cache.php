@@ -35,14 +35,14 @@ if ($pdo === null) {
 try {
     $cachedTokens = '';
 
-    $sql = 'SELECT `key`, `read`, `write`, `allow`, `expire` FROM `token`';
+    $sql = 'SELECT `name`, `key`, `read`, `write`, `allow`, `expire` FROM `token`';
 
     if (($stmt = $pdo->query($sql)) === false) {
         throw new \FS\Common\Exception\PDOQueryException('PDO query failed');
     }
 
     while ($row = $stmt->fetch()) {
-        $cachedTokens .= $row['key'] . '|' . $row['read'] . '|' . $row['write'] . '|' . $row['allow'] . '|' . (isset($row['expire']) ? $row['expire'] : '') . ';';
+        $cachedTokens .= $row['name'] . '|' . $row['key'] . '|' . $row['read'] . '|' . $row['write'] . '|' . $row['allow'] . '|' . (isset($row['expire']) ? $row['expire'] : '') . ';';
     }
 
     $cachedTokens = substr($cachedTokens, 0, -1);
