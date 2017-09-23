@@ -5,7 +5,7 @@ if (php_sapi_name() != 'cli') {
     die('Must be run via cli');
 }
 
-require __DIR__ . '/../config/common.php';
+require __DIR__ . '/../config/api.conf.php';
 require __DIR__ . '/../class/Common/autoload.php';
 
 // Check connection is working before proceeding (DNS might not be fully working on @reboot)
@@ -69,6 +69,21 @@ $sql = "CREATE TABLE IF NOT EXISTS `token` (
             UNIQUE INDEX `name` (`name`),
             UNIQUE INDEX `key` (`key`)
         ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4";
+
+if ($pdo->exec($sql) === false) {
+    die('Error: SQL statement error. Check your sql statement {' . $sql . '}');
+}
+
+// Create table 'user' if not exists
+$sql = "CREATE TABLE IF NOT EXISTS `user`(
+            `id` INT NOT NULL AUTO_INCREMENT, 
+            `username` VARCHAR(64) DEFAULT NULL,
+            `password` VARCHAR(64) DEFAULT NULL,
+            `email` VARCHAR(64) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE INDEX `unique_username` (`username`),
+            UNIQUE INDEX `unique_email` (`email`)
+        )ENGINE=InnoDB DEFAULT CHARSET 'UTF8MB4'";
 
 if ($pdo->exec($sql) === false) {
     die('Error: SQL statement error. Check your sql statement {' . $sql . '}');

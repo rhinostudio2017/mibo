@@ -10,8 +10,8 @@ if ((int)ini_get('register_argc_argv') != 1) {
     die('Error: register_argc_argv is not enabled, please check configuration in php.ini');
 }
 
+require __DIR__ . '/../config/api.conf.php';
 require __DIR__ . '/../class/Common/autoload.php';
-require __DIR__ . '/../config/common.php';
 
 // Check connection is working before proceeding (DNS might not be fully working on @reboot)
 if (!($validation = \FS\Common\IO::required('MIBO_CONNECTION', ['dns', 'username', 'password'], true))['valid']) {

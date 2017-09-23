@@ -1,3 +1,4 @@
 /.idea
-/config/common.php
+/config/api.conf.php
+/config/web.conf.php
 /config/token_cached.txt

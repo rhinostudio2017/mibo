@@ -1,0 +1,13 @@
+.footer-top{
+    border-top:1px solid #d9dede;
+}
+.copyright{
+    font-size:12px;
+    color:#aaaaaa;
+    float:right;
+}
+.copyright .span-decl{
+    display: block;
+    margin-top:5px;
+    float:left;
+}
