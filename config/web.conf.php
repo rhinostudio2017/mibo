@@ -1,5 +1,8 @@
 <?php
 
+// Define API endpoints
+define('API', 'http://localhost/api/');
+
 // Define dynamic token
 $tokenStr = file_get_contents(__DIR__ . '/token_cached.txt');
 $tokens   = explode(';', $tokenStr);

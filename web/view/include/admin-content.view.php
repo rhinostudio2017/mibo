@@ -15,7 +15,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody_resource">
                 <tr>
                     <td>
                         <img class="img-icon" src="<?php echo $asset; ?>images/t.png">
@@ -62,12 +62,14 @@
         </table>
     </div>
 
+    <!-- add -->
     <div class="row row-padding mb30">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" id="resource_add">
             <span class="fa fa-plus" aria-hidden="true"></span>&nbsp;Add
         </button>
     </div>
 
+    <!-- pagination -->
     <div class="row row-padding mb30">
         <ul class='pagination'>
             <li class="page-item">

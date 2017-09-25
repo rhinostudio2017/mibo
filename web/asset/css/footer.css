@@ -8,3 +8,25 @@
     color: #aaaaaa;
     float: right;
 }
+
+/* loading panel */
+#loading_panel {
+    position: fixed;
+    width: 100%;
+    height: calc(100% - 56px);
+    top: 56px;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    display:none;
+}
+
+#loading_icon {
+    position: relative;
+    z-index: 9999;
+    margin: 0 auto;
+    vertical-align: middle;
+    color: black;
+    display: table;
+    top: 300px;
+}

@@ -107,19 +107,19 @@ class Auth
         foreach ($tokenArr as $token) {
             if (strpos($token, $this->token) !== false) {
                 $itemArr = explode('|', $token);
-                $paths   = explode(',', $itemArr[3]);
+                $paths   = explode(',', $itemArr[4]);
 
                 foreach ($paths as $path) {
                     if (!isset($permission[$path])) {
                         $permission[$path] = ['read' => 0, 'write' => 0, 'expire' => 1];
                     }
 
-                    $permission[$path]['read'] |= $itemArr[1];
-                    $permission[$path]['write'] |= $itemArr[2];
+                    $permission[$path]['read'] |= $itemArr[2];
+                    $permission[$path]['write'] |= $itemArr[3];
 
                     if (!empty($permission[$path]['expire'])) {
-                        if (empty($itemArr[4]) || $permission[$path]['expire'] < $itemArr[4]) {
-                            $permission[$path]['expire'] = $itemArr[4];
+                        if (empty($itemArr[5]) || $permission[$path]['expire'] < $itemArr[5]) {
+                            $permission[$path]['expire'] = $itemArr[5];
                         }
                     }
                 }

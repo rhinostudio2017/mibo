@@ -1,3 +1,4 @@
+<!-- footer bar -->
 <div class="container-fluid bg-inverse div-footer">
     <div class="row">
         <div class="col-sm-3">
@@ -17,11 +18,21 @@
         </div>
     </div>
 </div>
+
+<!-- loading panel -->
+<div id="loading_panel">
+    <div id="loading_icon">
+        <img src="<?php echo $asset;?>/images/page-loader.gif" width="100px" height="100px">
+    </div>
+</div>
+
+<!-- config settings -->
 <?php
 $token = defined('TOKEN') ? TOKEN : '';
 if ($view == 'admin' && isset($_SESSION['admin'])) {
     $token = $_SESSION['admin'];
 }
 ?>
+<input type="hidden" id="api" value="<?php echo API; ?>">
 <input type="hidden" id="token" value="<?php echo $token; ?>">
 <input type="hidden" id="page" value="<?php echo $view; ?>">
