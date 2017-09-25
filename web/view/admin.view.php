@@ -14,7 +14,7 @@ require_once(__DIR__ . '/include/header.view.php');
 
 <div class="page">
     <?php
-    if (!isset($_SESSION['admin'])) {
+    if (isset($_SESSION['admin'])) {
         require_once(__DIR__ . '/include/admin-login.view.php');
     } else {
         require_once(__DIR__ . '/include/admin-content.view.php');

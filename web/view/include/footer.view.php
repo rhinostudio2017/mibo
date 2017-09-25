@@ -1,4 +1,4 @@
-<div class="container-fluid fixed-bottom bg-inverse div-footer">
+<div class="container-fluid bg-inverse div-footer">
     <div class="row">
         <div class="col-sm-3">
             <script type="text/javascript" src="http://widget.supercounters.com/online_i.js"></script>
@@ -24,3 +24,4 @@ if ($view == 'admin' && isset($_SESSION['admin'])) {
 }
 ?>
 <input type="hidden" id="token" value="<?php echo $token; ?>">
+<input type="hidden" id="page" value="<?php echo $view; ?>">
