@@ -5,8 +5,8 @@ if (php_sapi_name() != 'cli') {
     die('Must be run via cli');
 }
 
-require __DIR__ . '/../config/api.conf.php';
 require __DIR__ . '/../class/Common/autoload.php';
+require __DIR__ . '/../config/api.conf.php';
 
 // Check connection is working before proceeding (DNS might not be fully working on @reboot)
 if (!($validation = \FS\Common\IO::required('MIBO_CONNECTION', ['dns', 'username', 'password'], true))['valid']) {

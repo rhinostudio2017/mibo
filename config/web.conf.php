@@ -4,15 +4,8 @@
 define('API', 'http://localhost/api/');
 
 // Define dynamic token
-$tokenStr = file_get_contents(__DIR__ . '/token_cached.txt');
-$tokens   = explode(';', $tokenStr);
-foreach ($tokens as $token) {
-    $tokenParts = explode('|', $token);
-    if ($tokenParts[0] == 'web') {
-        define('TOKEN', $tokenParts[1]);
-        break;
-    }
-}
+$token = \FS\Web\Service\TokenService::fetchToken('web');
+define('TOKEN', $token);
 
 // Define environment constants
 define('ENV', 'test');

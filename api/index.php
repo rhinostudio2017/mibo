@@ -2,8 +2,8 @@
 
 ini_set('max_execution_time', 180);
 
-require __DIR__ . '/../config/api.conf.php';
 require __DIR__ . '/../class/Common/autoload.php';
+require __DIR__ . '/../config/api.conf.php';
 
 use FS\Common\Router;
 
@@ -35,6 +35,9 @@ $router->group('/resource/', function () {
 $router->group('/user/', function () {
     $this->post('login', function () {
         return (new \FS\API\Controller\UserController())->login();
+    });
+    $this->post('logout', function () {
+        return (new \FS\API\Controller\UserController())->logout();
     });
     $this->post('add', function () {
         return (new \FS\API\Controller\UserController())->create();

@@ -72,13 +72,13 @@
     <!-- pagination -->
     <div class="row row-padding mb30">
         <ul class='pagination'>
-            <li class="page-item">
+            <li class="page-item" id="page_previous">
                 <a class="page-link" href="#">Previous</a>
             </li>
             <li class="page-item active">
-                <a class="page-link" href="#">2</a>
+                <a class="page-link" href="#" id="page_active">1</a>
             </li>
-            <li class="page-item">
+            <li class="page-item" id="page_next">
                 <a class="page-link" href="#">Next</a>
             </li>
         </ul>

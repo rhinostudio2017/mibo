@@ -5,7 +5,6 @@ namespace FS\API\Controller;
 use FS\API\Model\User;
 use FS\Common\Exception\InvalidParameterException;
 use FS\Common\IO;
-use FS\API\Model\Resource;
 
 class UserController extends Controller
 {
@@ -162,6 +161,24 @@ class UserController extends Controller
             $this->responseArr['status']  = 'error';
             $this->responseArr['message'] = 'Failed to login. Either username or password is not correct.';
         }
+
+        // Set session 'admin', which should be part of api request/response handler
+        if ($this->responseArr['status']  == 'success') {
+
+            session_start();
+            $_SESSION['admin'] = \FS\Web\Service\TokenService::fetchToken('admin');
+            session_write_close();
+        }
+
+        return $this->responseArr;
+    }
+
+    public function logout()
+    {
+        $this->auth->hasPermission(['read']);
+
+        session_start();
+        session_destroy();
 
         return $this->responseArr;
     }

@@ -1,7 +1,7 @@
 <?php
 
-require __DIR__ . '/../config/web.conf.php';
 require __DIR__ . '/../class/Common/autoload.php';
+require __DIR__ . '/../config/web.conf.php';
 
 $router = new \FS\Common\Router();
 
@@ -40,6 +40,9 @@ $router->group('/api/resource/', function () {
 $router->group('/api/user/', function () {
     $this->post('login', function () {
         return (new \FS\API\Controller\UserController())->login();
+    });
+    $this->post('logout', function () {
+        return (new \FS\API\Controller\UserController())->logout();
     });
     $this->post('add', function () {
         return (new \FS\API\Controller\UserController())->create();
