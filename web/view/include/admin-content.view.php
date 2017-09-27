@@ -159,7 +159,31 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" id="modal_check">Check</button>
                 <button type="button" class="btn btn-primary" id="modal_save">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirm_dialog" tabindex="-1" role="dialog" aria-labelledby="confirmDialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-custom" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Dialog</h5>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirm_no">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirm_yes">Yes</button>
             </div>
         </div>
     </div>

@@ -2,9 +2,6 @@
  * Global settings
  * */
 var mibo = mibo || {};
-var config = config || {};
-var queue = queue || {};
-var util = util || {};
 
 // Config
 mibo.config = mibo.config || {
@@ -89,5 +86,62 @@ mibo.util = mibo.util || {
         }
 
         return new Pager();
+    }
+};
+
+mibo.modal = mibo.modal || {
+    'resource': {
+        'videoLink': {
+            'length': function(){
+                return 64;
+            }
+        },
+        'posterLink': {
+            'length': function(){
+                return 64;
+            }
+        },
+        'name': {
+            'length': function(){
+                return 64;
+            }
+        },
+        'description': {
+            'length': function(){
+                return 256;
+            }
+        },
+        'author': {
+            'length': function(){
+                return 32;
+            }
+        },
+        'venue': {
+            'length': function(){
+                return 64;
+            }
+        },
+        'note': {
+            'length': function(){
+                return 128;
+            }
+        }
+    },
+    'user': {
+        'username': {
+            'length': function(){
+                return 64;
+            }
+        },
+        'password': {
+            'length': function(){
+                return 64;
+            }
+        },
+        'email': {
+            'length': function(){
+                return 64;
+            }
+        }
     }
 };
