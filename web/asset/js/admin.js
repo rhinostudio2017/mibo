@@ -80,7 +80,6 @@ function formValidate() {
     return true;
 }
 
-
 /*
  * Admin-Content
  * */
@@ -150,6 +149,7 @@ function fetchResources(data) {
 }
 
 function attachEvent() {
+    // Logout link
     $('#link_logout').click(function (e) {
         mibo.util.loading.show();
         var data = data || {};
@@ -170,4 +170,89 @@ function attachEvent() {
             mibo.util.system.error();
         });
     });
+
+    // Resource add button
+    $('#resource_add').click(function (e) {
+        $('#resource_dialog').modal({
+            'backdrop': 'static',
+            'show': false
+        });
+        modalInit();
+        $('#resource_dialog').modal('show');
+    });
+
+    // Modal dialog focus
+    $('#resource_dialog input').focus(function (e) {
+        $('#modal-error').hide();
+    });
+
+    // Modal submit button
+    $('#modal_save').click(modalSubmit);
+}
+
+// Modal dialog initialize
+function modalInit(data) {
+    // For add mode
+    if (typeof data !== 'object') {
+        $('#resource_dialog input').val('');
+        $('#resource_dialog').data('mode', 'add');
+        return;
+    }
+    // For edit mode
+    [
+        {'key':'videoLink','label':'ipt_v_url'}, {'key':'posterLink','label':'ipt_i_url'}, {'key':'name','label':'ipt_name'},
+        {'key':'description','label':'ipt_description'}, {'key':'author','label':'ipt_author'}, {'key':'venue','label':'ipt_venue'}].forEach(function (object) {
+        data[object['key']] && $('#' + object['label']).val(data[object['key']]);
+    });
+    $('#resource_dialog').data('mode', 'edit');
+}
+// Modal dialog submit
+function modalSubmit() {
+    var validate = modalValidate();
+    if (validate !== true) {
+        $('#modal-error').show().find('label').html(validate);
+        return;
+    }
+
+    // Save resource via api
+    mibo.util.loading.show();
+    var data = data || {};
+    data.token = data.token || mibo.config.TOKEN;
+    data.videoLink = $('#ipt_v_url').val();
+    data.posterLink = $('#ipt_i_url').val();
+    data.name = $('#ipt_name').val();
+    data.descripton = $('#ipt_description').val();
+    data.author = $('#ipt_author').val();
+    data.venue = $('#ipt_venue').val();
+    var ajp = mibo.util.http.post(mibo.config.API + 'resource/add', data);
+    mibo.promiseq.admin_user_login = ajp;
+    ajp.done(function (data, status, ajXhr) {
+        console.log('data', data);
+        // Construct resource tbody
+        if (data.response.status != 'success') {
+            mibo.util.loading.hide();
+            $('#modal-error').show().find('label').html(data.response.message);
+            return;
+        }
+
+        mibo.util.loading.hide();
+        $('#resource_dialog').modal('hide');
+        fetchResources();
+    }).fail(function () {
+        mibo.util.system.error();
+    });
+}
+
+function modalValidate() {
+    var video = $('#ipt_v_url').val(), image = $('#ipt_i_url').val(), name = $('#ipt_name').val(), flag = 1;
+    if (video.trim() == '' || video.trim().length > 64) {
+        return 'Video URL cannot be empty, and the length must less than 64.';
+    }
+    if (image.trim() == '' || image.trim().length > 64) {
+        return 'Poster URL cannot be empty, and the length must less than 64.';
+    }
+    if (name.trim() == '' || name.trim().length > 64) {
+        return 'Video name cannot be empty, and the length must less than 64.';
+    }
+    return true;
 }

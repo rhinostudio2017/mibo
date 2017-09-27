@@ -73,6 +73,12 @@ body {
     .tbl-col-buttons {
         width: 170px;
     }
+
+    /* modal dialog */
+    .modal-dialog-custom {
+        width: 60%;
+        max-width: 800px;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -96,8 +102,16 @@ body {
     .tbl-col-buttons-text {
         display: none;
     }
+
+    /* modal dialog */
+    .modal-dialog-custom {
+        width: 100%;
+        max-width: 100%;
+        margin:0 auto;
+    }
 }
 
+/* common settings */
 .row-padding {
     padding-left: 12px;
     padding-right: 12px;
@@ -116,6 +130,26 @@ body {
 
 .page-text {
     width: 50px;
+}
+
+.modal-dialog-custom {
+    font-size: 18px;
+}
+
+.modal-dialog-custom label{
+    font-weight: 600;
+}
+
+.modal-dialog-custom input{
+    width: 100%;
+}
+
+.modal-dialog-custom .row{
+    margin-bottom:10px;
+}
+
+.modal-dialog-custom .row#modal-error{
+    display: none;
 }
 
 

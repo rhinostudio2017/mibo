@@ -92,7 +92,7 @@
 
 <!-- modal -->
 <div class="modal fade" id="resource_dialog" tabindex="-1" role="dialog" aria-labelledby="resourceDialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-custom" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="resource_dialog_title">Modal title</h5>
@@ -101,11 +101,65 @@
                 </button>
             </div>
             <div class="modal-body">
-                ...
+                <div class="container-fluid">
+                    <div class="row" id="modal-error">
+                        <div class="col-sm-12">
+                            <label class="text-danger"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="ipt_v_url"><span class="text-danger">*</span>&ensp;Video:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_v_url" value="" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="ipt_i_url"><span class="text-danger">*</span>&ensp;Image:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_i_url" value="" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="ipt_name"><span class="text-danger">*</span>&ensp;Name:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_name" value="" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="ipt_description">Description:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_description" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="ipt_author">Author:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_author" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="ipt_venue">Venue:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_venue" value="">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="modal_save">Save</button>
             </div>
         </div>
     </div>
