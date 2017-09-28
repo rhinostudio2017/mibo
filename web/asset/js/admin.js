@@ -140,7 +140,8 @@ function fetchResources(data) {
         } else {
             !$('#page_next').hasClass('disabled') || $('#page_next').removeClass('disabled');
         }
-
+        // Stiky footer
+        stikyFooter();
         mibo.util.loading.hide();
     }).fail(function () {
         mibo.util.system.error();
