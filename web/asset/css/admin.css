@@ -80,6 +80,7 @@ body {
     .modal-dialog-custom {
         width: 60%;
         max-width: 800px;
+        margin: 60px auto !important;
     }
 }
 
@@ -132,6 +133,7 @@ body {
 
 .page-text {
     width: 50px;
+    text-align: center;
 }
 
 .modal-dialog-custom {

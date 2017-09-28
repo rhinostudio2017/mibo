@@ -73,24 +73,24 @@
     <div class="row row-padding mb30">
         <ul class='pagination'>
             <li class="page-item" id="page_previous">
-                <a class="page-link" href="#">Previous</a>
+                <a class="page-link" href="javascript:void(0);">Previous</a>
             </li>
             <li class="page-item active">
-                <a class="page-link" href="#" id="page_active">1</a>
+                <a class="page-link" href="javascript:void(0);" id="page_active">1</a>
             </li>
             <li class="page-item" id="page_next">
-                <a class="page-link" href="#">Next</a>
+                <a class="page-link" href="javascript:void(0);">Next</a>
             </li>
         </ul>
         <div class="page-go">
             Total: <span id="page_total" class="page-total">5</span>
             <input type="text" id="page_number" value="" class="page-text" title="page number">
-            <button class="btn btn-primary">Go</button>
+            <button class="btn btn-primary" id="page_go">Go</button>
         </div>
     </div>
 </div>
 
-<!-- modal -->
+<!-- modal resource -->
 <div class="modal fade" id="resource_dialog" tabindex="-1" role="dialog" aria-labelledby="resourceDialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-custom" role="document">
         <div class="modal-content">
@@ -166,6 +166,7 @@
     </div>
 </div>
 
+<!-- modal confirmation -->
 <div class="modal fade" id="confirm_dialog" tabindex="-1" role="dialog" aria-labelledby="confirmDialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-custom" role="document">
         <div class="modal-content">

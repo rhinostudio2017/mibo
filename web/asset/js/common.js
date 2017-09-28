@@ -45,7 +45,7 @@ mibo.util = mibo.util || {
     },
     'pager': function(){
         function Pager() {
-            var currentPage = 1, totalPage = 1, totalItem = 0, itemCount = 20, itemStart = 0;
+            var currentPage = 1, totalPage = 1, totalItem = 0, itemCount = 10, itemStart = 0;
             this.setPage = function(page){
                 currentPage = page;
             };

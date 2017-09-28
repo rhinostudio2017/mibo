@@ -90,7 +90,6 @@ function fetchResources(data) {
     mibo.util.loading.show();
     var data = data || {};
     data.token = data.token || mibo.config.TOKEN;
-    pager.setPage($('#page_number').val() || 1);
     data.offset = pager.getItemStart();
     data.limit = pager.getItemCount();
     var ajp = mibo.util.http.post(mibo.config.API + 'resource/fetch', data);
@@ -233,7 +232,10 @@ function attachEvent() {
             'backdrop': 'static',
             'show': false
         });
-        $('#resource_dialog').removeData('mode').removeData('label').removeData('data').data({'mode':'add','label':'Add'});
+        $('#resource_dialog').removeData('mode').removeData('label').removeData('data').data({
+            'mode': 'add',
+            'label': 'Add'
+        });
         modalInit();
         $('#resource_dialog').modal('show');
     });
@@ -248,6 +250,30 @@ function attachEvent() {
 
     // Modal check video button
     $('#modal_check').click(modalCheckVideo);
+
+    // Pagination buttons
+    $('#page_previous a').click(function (e) {
+        if (!pager.isFirstPage()) {
+            pager.setPage(pager.getPage() - 1);
+            fetchResources();
+        }
+    });
+    $('#page_next a').click(function (e) {
+        if (!pager.isLastPage()) {
+            pager.setPage(pager.getPage() + 1);
+            console.log('target page: ', pager.getPage());
+            fetchResources();
+        }
+    });
+    $('#page_go').click(function (e) {
+        var pageNumber = ~~$('#page_number').val();
+        if (pageNumber  == 0 || pageNumber > pager.getTotalPage()) {
+            mibo.util.system.error('Please input an page number between 1 and ' + pager.getTotalPage());
+            return;
+        }
+        pager.setPage(pageNumber);
+        fetchResources();
+    });
 }
 
 // Modal dialog initialize
@@ -257,7 +283,7 @@ function modalInit() {
     if (data['mode'] == 'add') {
         // For add mode
         $('#resource_dialog input').val('');
-    }else if (data['mode'] == 'edit') {
+    } else if (data['mode'] == 'edit') {
         // For edit mode
         [
             {'key': 'videoLink', 'label': 'ipt_v_url'}, {'key': 'posterLink', 'label': 'ipt_i_url'}, {
@@ -283,9 +309,9 @@ function modalSubmit() {
     var cb_add_edit_yes = function () {
         //$('#resource_dialog').modal({'backdrop':'static'});
         var mode = $('#resource_dialog').data('mode'), data = $('#resource_dialog').data('data') || {}, url;
-        if (mode == 'add'){
+        if (mode == 'add') {
             url = mibo.config.API + 'resource/add';
-        }else if(mode == 'edit'){
+        } else if (mode == 'edit') {
             url = mibo.config.API + 'resource/edit';
         }
         // Save resource via api
@@ -315,7 +341,7 @@ function modalSubmit() {
             mibo.util.system.error();
         });
     }, cb_add_edit_no = function () {
-        $('#resource_dialog').modal({'backdrop':'static'});
+        $('#resource_dialog').modal({'backdrop': 'static'});
     };
     $('#resource_dialog').modal('hide');
     showConfirmDialog('Are you sure to save?', cb_add_edit_yes, cb_add_edit_no);
@@ -369,6 +395,7 @@ function showConfirmDialog(message, cbYes, cbNo) {
     $('#confirm_dialog .modal-body label').html(message);
     $('#confirm_yes').click(function (e) {
         $('#confirm_dialog').modal('hide');
+        $('#modal-error').hide();
         cbYes && cbYes();
     });
     $('#confirm_no').click(function (e) {
