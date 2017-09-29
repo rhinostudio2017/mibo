@@ -12,6 +12,9 @@ $router->get('/', function () {
 $router->get('/admin', function () {
     return (new \FS\Web\Controller\PageController())->render('admin');
 });
+$router->route('/search', ['GET', 'POST'], function () {
+    return (new \FS\Web\Controller\PageController())->render('search');
+});
 
 #region Api endpoints
 // resource

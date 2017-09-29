@@ -19,8 +19,8 @@
             }
             ?>
         </ul>
-        <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <form class="form-inline mt-2 mt-md-0" id="form_search">
+            <input class="form-control mr-sm-2" type="text" id="search_text" placeholder="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>

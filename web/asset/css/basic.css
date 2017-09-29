@@ -7,3 +7,20 @@
 .mb30{
     margin-bottom: 30px;
 }
+.right{
+    float: right;
+}
+.left{
+    float: left;
+}
+
+/* common for user role */
+.section-header{
+    font-weight: 700;
+}
+.section-label{
+    font-size: 2rem;
+}
+.section-link{
+    font-weight: 700;
+}

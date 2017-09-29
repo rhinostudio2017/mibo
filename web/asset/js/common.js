@@ -43,6 +43,26 @@ mibo.util = mibo.util || {
                 alert(msg);
             }
         },
+        'format': {
+            'number2kview': function (number) {
+                var strNumber = number + '', strlength = strNumber.length;
+                if (strlength <= 3) {
+                    return number;
+                }
+                var strView = '', start = 3, end;
+                strView = ',' + strNumber.slice(-start);
+                while (start < strlength) {
+                    end = -start;
+                    start += 3;
+                    if (start > strlength) {
+                        start = strlength;
+                    }
+                    strView = ',' + strNumber.slice(-start, -end);
+                }
+                strView.splice(0, 1);
+                return strView;
+            }
+        },
         'pager': function () {
             function Pager() {
                 var currentPage = 1, totalPage = 1, totalItem = 0, itemCount = 10, itemStart = 0;
@@ -86,6 +106,27 @@ mibo.util = mibo.util || {
             }
 
             return new Pager();
+        },
+        'form': {
+            'post': function (url, data) {
+                var form = document.createElement('form');
+                form.target = '_blank';
+                form.method = 'POST';
+                form.action = url;
+                form.style.display = 'none';
+
+                for (var key in data) {
+                    var input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = key;
+                    input.value = data[key];
+                    form.appendChild(input);
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+            }
         }
     };
 
@@ -150,19 +191,19 @@ mibo.modal = mibo.modal || {
  * Common initialization
  * */
 /*
-(function () {
-    // Stiky footer
-    console.log(window.screen.availHeight, $('.page').height(), $('.div-footer').height(), 'loading..');
-    $(window).load(function () {
-        console.log(window.screen.availHeight, $('.page').height(), $('.div-footer').height());
-        if ($('.page').height() < window.screen.availHeight - $('.div-footer').height() - 56) {
-            $('.div-footer').hasClass('div-footer-fixed') && $('.div-footer').addClass('div-footer-fixed');
-        } else {
-            $('.div-footer').hasClass('div-footer-fixed') && $('.div-footer').removeClass('div-footer-fixed');
-        }
-    });
-})();
-*/
+ (function () {
+ // Stiky footer
+ console.log(window.screen.availHeight, $('.page').height(), $('.div-footer').height(), 'loading..');
+ $(window).load(function () {
+ console.log(window.screen.availHeight, $('.page').height(), $('.div-footer').height());
+ if ($('.page').height() < window.screen.availHeight - $('.div-footer').height() - 56) {
+ $('.div-footer').hasClass('div-footer-fixed') && $('.div-footer').addClass('div-footer-fixed');
+ } else {
+ $('.div-footer').hasClass('div-footer-fixed') && $('.div-footer').removeClass('div-footer-fixed');
+ }
+ });
+ })();
+ */
 // Stiky footer
 function stikyFooter() {
     if ($('.page').height() < window.screen.availHeight - $('.div-footer').height() - 56) {
@@ -173,3 +214,23 @@ function stikyFooter() {
 }
 
 $(window).bind('load', stikyFooter);
+
+// Search form
+$('#form_search').submit(function (e) {
+    e.preventDefault();
+    var keyword = $('#search_text').val();
+    if (!keyword.trim()) {
+        return;
+    }
+    var page = $('#page').val();
+    if (page == 'admin') {
+         typeof fetchResources == 'function' && fetchResources();
+    } else if (page == 'search') {
+        typeof searchresourcesDynamic == 'function' && searchresourcesDynamic();
+    } else {
+        var data = {}, url = '/search';
+        data.keyword = keyword;
+        mibo.util.form.post(url, data);
+    }
+
+});
