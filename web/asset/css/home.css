@@ -13,7 +13,7 @@
     height: 60px;
 }
 
-#h_n_tbody tr, #h_t_tbody tr{
+#h_n_tbody tr, #h_t_tbody tr, #result_tbody tr{
     cursor: pointer;
 }
 

@@ -26,10 +26,12 @@ if (defined('ENV') && ENV === 'test') {
 <!-- each detailed external asset -->
     <link rel="stylesheet" href="<?php echo $asset?>css/admin.css">
     <link rel="stylesheet" href="<?php echo $asset?>css/home.css">
+    <link rel="stylesheet" href="<?php echo $asset?>css/search.css">
 
     <script rel="text/javascript" src="<?php echo $asset?>js/common.js"></script>
     <script rel="text/javascript" src="<?php echo $asset?>js/admin.js"></script>
     <script rel="text/javascript" src="<?php echo $asset?>js/home.js"></script>
+    <script rel="text/javascript" src="<?php echo $asset?>js/search.js"></script>
 <?php
 } else {
 ?>

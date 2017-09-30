@@ -12,7 +12,7 @@
         <table class="table table-hover">
             <tbody id="h_n_tbody">
                 <tr>
-                    <td>
+                    <td class="tbl-col-img">
                         <img class="img-icon" src="<?php echo $asset; ?>images/t.png">
                     </td>
                     <td class="tbl-col-author">
@@ -21,7 +21,9 @@
                     </td>
                     <td class="tbl-col-time">
                         <p class="td-row">2017-09-25 12:58:23</p>
-                        <p class="td-row">40,000</p>
+                        <p class="td-row">
+                            <i class="fa fa-eye" aria-hidden="true"></i>40,000
+                        </p>
                     </td>
                     <td>
                         Some description for testing..Some description for testing..Some description for testing..Some description for testing..
@@ -37,7 +39,9 @@
                     </td>
                     <td class="tbl-col-time">
                         <p class="td-row">2017-09-25 12:58:23</p>
-                        <p class="td-row">40,000</p>
+                        <p class="td-row">
+                            <i class="fa fa-eye" aria-hidden="true"></i>40,000
+                        </p>
                     </td>
                     <td>
                         Some description for testing..Some description for testing..Some description for testing..Some description for testing..

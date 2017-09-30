@@ -26,12 +26,12 @@ require_once(__DIR__ . '/include/bundle.view.php');
 $params = array_merge($_GET, $_POST);
 ?>
 <!-- Set search criteria based on incoming parameters -->
-<input type="hidden" id="ipt_startTime" value="<?php echo $params['startTime'] ?? '';?>">
-<input type="hidden" id="ipt_endTime" value="<?php echo $params['endTime'] ?? '';?>">
-<input type="hidden" id="ipt_offset" value="<?php echo $params['offset'] ?? '';?>">
-<input type="hidden" id="ipt_limit" value="<?php echo $params['limit'] ?? '';?>">
-<input type="hidden" id="ipt_keyword" value="<?php echo $params['keyword'] ?? '';?>">
-<input type="hidden" id="ipt_order" value="<?php echo $params['order'] ?? '';?>">
+<input type="hidden" id="startTime" value="<?php echo $params['startTime'] ?? '';?>">
+<input type="hidden" id="endTime" value="<?php echo $params['endTime'] ?? '';?>">
+<input type="hidden" id="offset" value="<?php echo $params['offset'] ?? '';?>">
+<input type="hidden" id="limit" value="<?php echo $params['limit'] ?? '';?>">
+<input type="hidden" id="keyword" value="<?php echo $params['keyword'] ?? '';?>">
+<input type="hidden" id="order" value="<?php echo $params['order'] ?? '';?>">
 
 </body>
 </html>

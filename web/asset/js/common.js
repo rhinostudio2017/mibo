@@ -218,15 +218,19 @@ $(window).bind('load', stikyFooter);
 // Search form
 $('#form_search').submit(function (e) {
     e.preventDefault();
+    /*
     var keyword = $('#search_text').val();
     if (!keyword.trim()) {
         return;
     }
+    */
     var page = $('#page').val();
     if (page == 'admin') {
-         typeof fetchResources == 'function' && fetchResources();
+         typeof admin_fetchResources == 'function' && admin_fetchResources();
     } else if (page == 'search') {
-        typeof searchresourcesDynamic == 'function' && searchresourcesDynamic();
+        $('#keyword').val($('#search_text').val());
+        typeof pager == 'object' && pager.setPage(1);
+        typeof search_searchResources == 'function' && search_searchResources();
     } else {
         var data = {}, url = '/search';
         data.keyword = keyword;

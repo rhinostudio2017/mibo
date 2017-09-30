@@ -5,21 +5,21 @@ $(function () {
     }
     // Initialization
     if ($('#form_login').length != 0) {
-        formAttachEvent();
+        admin_formAttachEvent();
     } else {
-        attachEvent();
-        fetchResources();
+        admin_attachEvent();
+        admin_fetchResources();
     }
 });
 
 /*
  * Admin-Login
  * */
-function formAttachEvent() {
+function admin_formAttachEvent() {
     // Form event
     $('#form_login').submit(function (e) {
         e.preventDefault();
-        var validate = formValidate();
+        var validate = admin_formValidate();
         if (validate !== true) {
             mibo.util.system.error(validate);
             return;
@@ -57,7 +57,7 @@ function formAttachEvent() {
     });
 }
 
-function formValidate() {
+function admin_formValidate() {
     var username = $('#username').val(), password = $('#password').val(), flag = 1;
     if (username.trim() == '' || username.trim().length > mibo.modal.user.username.length()) {
         $('#username').addClass('color-error');
@@ -86,7 +86,7 @@ function formValidate() {
 var pager = mibo.util.pager();
 
 // Retrieve resources via api
-function fetchResources(data) {
+function admin_fetchResources() {
     mibo.util.loading.show();
     var data = data || {};
     data.token = data.token || mibo.config.TOKEN;
@@ -124,7 +124,7 @@ function fetchResources(data) {
             html.push('</tr>');
             $(html.join('')).data(data.response.data.rows[p]).appendTo(resourceTBody);
         }
-        attachResourceEvent();
+        admin_attachResourceEvent();
         // Pagination re-settings
         pager.setTotalItem(data.response.data.totalRowCount);
         $('#page_total').html(pager.getTotalPage());
@@ -148,7 +148,7 @@ function fetchResources(data) {
     });
 }
 
-function attachResourceEvent() {
+function admin_attachResourceEvent() {
     $('#tbody_resource tr').each(function () {
         var $tr = $(this);
         $tr.find('button').each(function () {
@@ -192,7 +192,7 @@ function attachResourceEvent() {
                                 mibo.util.system.error(data.response.message);
                                 return;
                             }
-                            fetchResources();
+                            admin_fetchResources();
                         }).fail(function () {
                             mibo.util.system.error();
                         });
@@ -204,7 +204,7 @@ function attachResourceEvent() {
     });
 }
 
-function attachEvent() {
+function admin_attachEvent() {
     // Logout link
     $('#link_logout').click(function (e) {
         mibo.util.loading.show();
@@ -256,14 +256,14 @@ function attachEvent() {
     $('#page_previous a').click(function (e) {
         if (!pager.isFirstPage()) {
             pager.setPage(pager.getPage() - 1);
-            fetchResources();
+            admin_fetchResources();
         }
     });
     $('#page_next a').click(function (e) {
         if (!pager.isLastPage()) {
             pager.setPage(pager.getPage() + 1);
             console.log('target page: ', pager.getPage());
-            fetchResources();
+            admin_fetchResources();
         }
     });
     $('#page_go').click(function (e) {
@@ -273,7 +273,7 @@ function attachEvent() {
             return;
         }
         pager.setPage(pageNumber);
-        fetchResources();
+        admin_fetchResources();
     });
 }
 
@@ -337,7 +337,7 @@ function modalSubmit() {
 
             mibo.util.loading.hide();
             $('#resource_dialog').modal('hide');
-            fetchResources();
+            admin_fetchResources();
         }).fail(function () {
             mibo.util.system.error();
         });

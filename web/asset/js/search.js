@@ -1,27 +1,31 @@
 // Initialization
 $(function () {
-    if ($('#page').val() != 'home') {
+    if ($('#page').val() != 'search') {
         return false;
     }
     // Initialization
-    home_attachEvent();
-    home_searchResources({}, 'h_n_tbody');
-    home_searchResources({}, 'h_t_tbody');
+    search_attachEvent();
+    search_searchResources();
 });
 
 /*
- * Home-Content
+ * Admin-Content
  * */
+var pager = mibo.util.pager();
 
 // Retrieve resources via api
-function home_searchResources(criteria, containerId) {
+function search_searchResources() {
     mibo.util.loading.show();
     var data = {};
     data.token = mibo.config.TOKEN;
-    data.offset = criteria.offset || 0;
-    data.limit = criteria.limit || 10;
-    data.keyword = criteria.keyword || null;
-    data.order = criteria.order || null;
+    data.offset = pager.getItemStart();
+    data.limit = pager.getItemCount();
+    var startTime = $('#startTime').val(), endTime = $('#endTime').val(),
+        keyword = $('#keyword').val(), order = $('#order').val();
+    startTime && (data.startTime = startTime);
+    endTime && (data.endTime = endTime);
+    keyword && (data.keyword = keyword);
+    order && (data.order = order);
     var ajp = mibo.util.http.post(mibo.config.API + 'resource/fetch', data);
     mibo.promiseq.admin_resource_fetch = ajp;
     ajp.done(function (data, status, ajXhr) {
@@ -32,7 +36,7 @@ function home_searchResources(criteria, containerId) {
             mibo.util.system.error(data.response.message);
             return;
         }
-        var resourceTBody = $('#' + containerId).empty(), html;
+        var resourceTBody = $('#result_tbody').empty(), html;
         if (data.response.data.totalRowCount == 0) {
             $('<tr><td><p>There is no result based on your search keyword...</p></td></tr>').appendTo(resourceTBody);
             stikyFooter();
@@ -57,7 +61,22 @@ function home_searchResources(criteria, containerId) {
             html.push('</tr>');
             $(html.join('')).data(data.response.data.rows[p]).appendTo(resourceTBody);
         }
-        home_attachResourceEvent();
+        search_attachResourceEvent();
+        // Pagination re-settings
+        pager.setTotalItem(data.response.data.totalRowCount);
+        $('#page_total').html(pager.getTotalPage());
+        $('#page_number').val('');
+        $('#page_active').html(pager.getPage());
+        if (pager.isFirstPage()) {
+            $('#page_previous').hasClass('disabled') || $('#page_previous').addClass('disabled');
+        } else {
+            !$('#page_previous').hasClass('disabled') || $('#page_previous').removeClass('disabled');
+        }
+        if (pager.isLastPage()) {
+            $('#page_next').hasClass('disabled') || $('#page_next').addClass('disabled');
+        } else {
+            !$('#page_next').hasClass('disabled') || $('#page_next').removeClass('disabled');
+        }
         // Stiky footer
         stikyFooter();
         mibo.util.loading.hide();
@@ -66,21 +85,36 @@ function home_searchResources(criteria, containerId) {
     });
 }
 
-function home_attachResourceEvent() {
-    $('#h_n_tbody tr, #h_t_tbody tr').click(function (e) {
+function search_attachResourceEvent() {
+    $('#result_tbody tr').click(function (e) {
         e.preventDefault();
         var data = $(this).data(), url = '/play';
         mibo.util.form.post(url, data);
     });
 }
 
-function home_attachEvent() {
-    // View more link
-    $('#btn_more_new_pc, #btn_more_new_mb, #btn_more_top_pc, #btn_more_top_mb').click(function (e) {
-        var data = {}, url = '/search';
-        if ($(this).attr('type') == 'top') {
-            data.order = 'views';
+function search_attachEvent() {
+    // Pagination buttons
+    $('#page_previous a').click(function (e) {
+        if (!pager.isFirstPage()) {
+            pager.setPage(pager.getPage() - 1);
+            search_searchResources();
         }
-        mibo.util.form.post(url, data);
+    });
+    $('#page_next a').click(function (e) {
+        if (!pager.isLastPage()) {
+            pager.setPage(pager.getPage() + 1);
+            console.log('target page: ', pager.getPage());
+            search_searchResources();
+        }
+    });
+    $('#page_go').click(function (e) {
+        var pageNumber = ~~$('#page_number').val();
+        if (pageNumber  == 0 || pageNumber > pager.getTotalPage()) {
+            mibo.util.system.error('Please input an page number between 1 and ' + pager.getTotalPage());
+            return;
+        }
+        pager.setPage(pageNumber);
+        search_searchResources();
     });
 }
