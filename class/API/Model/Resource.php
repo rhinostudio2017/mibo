@@ -135,8 +135,8 @@ class Resource
     public function setVideoLink($videoLink)
     {
 
-        if (strlen($videoLink) > 64) {
-            throw new InvalidParameterException('Parameter {videoLink} must less or equal 64 chars');
+        if (strlen($videoLink) > 128) {
+            throw new InvalidParameterException('Parameter {videoLink} must less or equal 128 chars');
         }
 
         $this->videoLink = $videoLink;

@@ -134,7 +134,7 @@ mibo.modal = mibo.modal || {
         'resource': {
             'videoLink': {
                 'length': function () {
-                    return 64;
+                    return 128;
                 }
             },
             'posterLink': {

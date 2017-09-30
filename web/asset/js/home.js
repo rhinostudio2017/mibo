@@ -43,7 +43,7 @@ function home_searchResources(criteria, containerId) {
             html = [];
             html.push('<tr id="', data.response.data.rows[p]['id'], '">');
             html.push('<td class="tbl-col-img">');
-            html.push('<img class="img-icon" src="', data.response.data.rows[p]['poster_link'], '">');
+            html.push('<img class="img-icon" src="', decodeURIComponent(data.response.data.rows[p]['poster_link']), '">');
             html.push('</td>');
             html.push('<td class="tbl-col-author">');
             html.push('<p class="td-row">', data.response.data.rows[p]['name'], '</p>');
