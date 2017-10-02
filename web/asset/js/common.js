@@ -57,9 +57,9 @@ mibo.util = mibo.util || {
                     if (start > strlength) {
                         start = strlength;
                     }
-                    strView = ',' + strNumber.slice(-start, -end);
+                    strView = ',' + strNumber.slice(-start, -end) + strView;
                 }
-                strView.splice(0, 1);
+                strView = strView.slice(1);
                 return strView;
             }
         },
