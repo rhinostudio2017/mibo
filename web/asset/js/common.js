@@ -45,19 +45,19 @@ mibo.util = mibo.util || {
         },
         'format': {
             'number2kview': function (number) {
-                var strNumber = number + '', strlength = strNumber.length;
-                if (strlength <= 3) {
+                var strNumber = number + '', strLength = strNumber.length;
+                if (strLength <= 3) {
                     return number;
                 }
                 var strView = '', start = 3, end;
                 strView = ',' + strNumber.slice(-start);
-                while (start < strlength) {
+                while (start < strLength) {
                     end = -start;
                     start += 3;
-                    if (start > strlength) {
-                        start = strlength;
+                    if (start > strLength) {
+                        start = strLength;
                     }
-                    strView = ',' + strNumber.slice(-start, -end) + strView;
+                    strView = ',' + strNumber.slice(-start, end) + strView;
                 }
                 strView = strView.slice(1);
                 return strView;

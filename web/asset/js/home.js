@@ -6,7 +6,7 @@ $(function () {
     // Initialization
     home_attachEvent();
     home_searchResources({}, 'h_n_tbody');
-    home_searchResources({}, 'h_t_tbody');
+    home_searchResources({'order':'views'}, 'h_t_tbody');
 });
 
 /*
