@@ -40,6 +40,9 @@ $router->group('/api/resource/', function () {
     $this->post('fetch', function () {
         return (new \FS\API\Controller\ResourceController())->search();
     });
+    $this->post('increase-views', function () {
+        return (new \FS\API\Controller\ResourceController())->increaseViews();
+    });
 });
 
 // user

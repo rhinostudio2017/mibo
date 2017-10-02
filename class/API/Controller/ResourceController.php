@@ -228,6 +228,33 @@ class ResourceController extends Controller
 
         return $this->responseArr;
     }
+
+    // Increase view numbers of a specific resource based on `id`
+    // Notes: since `increase views` is a frequent and resource-related only db action, will
+    // be improved by using memcached in future
+    public function increaseViews()
+    {
+        $this->auth->hasPermission(['write']);
+
+        if (!($validation = IO::required($this->data, ['id']))['valid']) {
+            throw new InvalidParameterException($validation['message']);
+        }
+
+        $resource = new Resource($this->data);
+
+        // Insert resource item
+        $sql = "UPDATE `resource` 
+                SET `views` = `views` + 1
+                WHERE `id` = :id";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            'id'           => $resource->getId()
+        ]);
+
+        return $this->responseArr;
+    }
     #endregion
 
     #region Utils
