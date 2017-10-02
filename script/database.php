@@ -89,3 +89,27 @@ if ($pdo->exec($sql) === false) {
     die('Error: SQL statement error. Check your sql statement {' . $sql . '}');
 }
 #endregion
+
+#region Remove unique index `name` and `key` for defining multiple tokens by same name & key to control multiple permissions
+// Drop unique index `name`
+$sqlKeyExist = "SELECT COUNT(*)
+                FROM information_schema.KEY_COLUMN_USAGE kc
+                WHERE kc.TABLE_SCHEMA = DATABASE() AND kc.TABLE_NAME = 'token' AND kc.COLUMN_NAME = 'name'";
+$result      = $pdo->query($sqlKeyExist)->fetchColumn();
+if ($result) {
+    if (false === $pdo->exec("ALTER TABLE `token` DROP INDEX `name`")) {
+        die('Error: SQL statement error. Check your sql statement {' . $sql . '}');
+    }
+}
+
+// Drop unique index `key`
+$sqlKeyExist = "SELECT COUNT(*)
+                FROM information_schema.KEY_COLUMN_USAGE kc
+                WHERE kc.TABLE_SCHEMA = DATABASE() AND kc.TABLE_NAME = 'token' AND kc.COLUMN_NAME = 'key'";
+$result      = $pdo->query($sqlKeyExist)->fetchColumn();
+if ($result) {
+    if (false === $pdo->exec("ALTER TABLE `token` DROP INDEX `key`")) {
+        die('Error: SQL statement error. Check your sql statement {' . $sql . '}');
+    }
+}
+#endregion
