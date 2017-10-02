@@ -28,8 +28,8 @@ class ResourceController extends Controller
         }
 
         // Insert resource item
-        $sql = "INSERT INTO `resource`(`name`, `description`, `poster_link`, `video_link`, `author`, `produce_time`, `venue`, `views`, `note`) 
-                VALUES(:name, :description, :poster_link, :video_link, :author, :produce_time, :venue, :views, :note)";
+        $sql = "INSERT INTO `resource`(`name`, `description`, `poster_link`, `video_link`, `author`, `produce_time`, `run_time`, `venue`, `views`, `note`) 
+                VALUES(:name, :description, :poster_link, :video_link, :author, :produce_time, :run_time, :venue, :views, :note)";
 
         $stmt = $this->pdo->prepare($sql);
 
@@ -40,6 +40,7 @@ class ResourceController extends Controller
             'video_link'   => $resource->getVideoLink(),
             'author'       => $resource->getAuthor(),
             'produce_time' => $resource->getProduceTime(),
+            'run_time'     => $resource->getRunTime(),
             'venue'        => $resource->getVenue(),
             'views'        => $resource->getViews(),
             'note'         => $resource->getNote()
@@ -66,7 +67,7 @@ class ResourceController extends Controller
         $sql = "UPDATE `resource` 
                 SET `name` = :name, `description` = :description, `poster_link` = :poster_link, 
                     `video_link` = :video_link, `author` = :author, `produce_time` = :produce_time, 
-                    `venue` = :venue, `views` = :views, `note` = :note
+                    `run_time` = :run_time, `venue` = :venue, `views` = :views, `note` = :note
                 WHERE `id` = :id";
 
         $stmt = $this->pdo->prepare($sql);
@@ -79,6 +80,7 @@ class ResourceController extends Controller
             'video_link'   => $resource->getVideoLink(),
             'author'       => $resource->getAuthor(),
             'produce_time' => $resource->getProduceTime(),
+            'run_time'     => $resource->getRunTime(),
             'venue'        => $resource->getVenue(),
             'views'        => $resource->getViews(),
             'note'         => $resource->getNote()
@@ -154,9 +156,9 @@ class ResourceController extends Controller
         $limit     = IO::getValueWithDefault($this->data, 'limit', 20);
         $startTime = IO::getValueWithDefault($this->data, 'startTime');
         $endTime   = IO::getValueWithDefault($this->data, 'endTime');
-        $keyword  = IO::getValueWithDefault($this->data, 'keyword');
-        $orders   = [IO::getValueWithDefault($this->data, 'order')];
-        $orders[] = 'produce_time';
+        $keyword   = IO::getValueWithDefault($this->data, 'keyword');
+        $orders    = [IO::getValueWithDefault($this->data, 'order')];
+        $orders[]  = 'produce_time';
 
         //Construct SQL statement
         $sql = "SELECT * FROM `resource` ";
@@ -250,7 +252,7 @@ class ResourceController extends Controller
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute([
-            'id'           => $resource->getId()
+            'id' => $resource->getId()
         ]);
 
         return $this->responseArr;

@@ -149,6 +149,30 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-3">
+                            <label for="ipt_produceTime">Produce Time:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_produceTime" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="ipt_runTime">Run Time:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_runTime" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="ipt_views">Views:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="ipt_views" value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
                             <label for="ipt_venue">Venue:</label>
                         </div>
                         <div class="col-sm-9">

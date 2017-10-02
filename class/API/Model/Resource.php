@@ -14,8 +14,9 @@ class Resource
     private $videoLink   = '';
     private $author      = '';
     private $produceTime = '0000-00-00 00:00:00';
-    private $venue       = '';
+    private $runTime     = '';
     private $views       = 0;
+    private $venue       = '';
     private $note        = '';
     #endregion
 
@@ -54,6 +55,10 @@ class Resource
             $this->setProduceTime($data['produceTime']);
         } else {
             $this->setProduceTime((new \DateTime())->format('Y-m-d H:i:s'));
+        }
+
+        if (isset($data['runTime'])) {
+            $this->setRunTime($data['runTime']);
         }
 
         if (isset($data['venue'])) {
@@ -170,6 +175,20 @@ class Resource
         $this->produceTime = $produceTime;
     }
 
+    public function getRunTime()
+    {
+        return $this->runTime;
+    }
+
+    public function setRunTime($runTime)
+    {
+        if (!$this->validateRunTime($runTime)) {
+            throw new InvalidParameterException('Parameter {runTime} is not in correct datetime format');
+        }
+
+        $this->runTime = $runTime;
+    }
+
     public function getVenue()
     {
         return $this->venue;
@@ -220,6 +239,14 @@ class Resource
         $preg = '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/';
 
         return preg_match($preg, $datetime) === 1;
+    }
+
+    private function validateRunTime($runTime)
+    {
+        // runTime validation, e.g. 01:23:20 or 11:09
+        $preg = '/^(\d{2}:)?\d{2}:\d{2}$/';
+
+        return preg_match($preg, $runTime) === 1;
     }
     #endregion
 }

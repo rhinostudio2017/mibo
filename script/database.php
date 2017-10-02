@@ -113,3 +113,15 @@ if ($result) {
     }
 }
 #endregion
+
+#region Add column `run_time`
+$sqlKeyExist = "SELECT COUNT(*)
+                FROM information_schema.COLUMNS c
+                WHERE c.TABLE_SCHEMA = DATABASE() AND c.TABLE_NAME = 'resource' AND c.COLUMN_NAME = 'run_time'";
+$result      = $pdo->query($sqlKeyExist)->fetchColumn();
+if (!$result) {
+    if (false === $pdo->exec("ALTER TABLE `resource` ADD COLUMN `run_time` VARCHAR(8) DEFAULT '00:00' AFTER `produce_time`")) {
+        die('Error: SQL statement error. Check your sql statement {' . $sql . '}');
+    }
+}
+#endregion

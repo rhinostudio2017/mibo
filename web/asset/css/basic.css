@@ -17,6 +17,7 @@
 /* common for user role */
 .section-header{
     font-weight: 700;
+    margin-bottom: 10px;
 }
 .section-label{
     font-size: 2rem;

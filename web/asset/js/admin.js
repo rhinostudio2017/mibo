@@ -171,6 +171,9 @@ function admin_attachResourceEvent() {
                             'name': editData.name,
                             'description': editData.description,
                             'author': editData.author,
+                            'produceTime': editData.produce_time,
+                            'runTime': editData.run_time,
+                            'views': editData.views,
                             'venue': editData.venue
                         }
                     });
@@ -323,6 +326,9 @@ function modalSubmit() {
         data.name = $('#ipt_name').val();
         data.description = $('#ipt_description').val();
         data.author = $('#ipt_author').val();
+        data.produceTime = $('#ipt_produceTime').val();
+        data.runTime = $('#ipt_runTime').val();
+        data.views = $('#ipt_views').val();
         data.venue = $('#ipt_venue').val();
         var ajp = mibo.util.http.post(url, data);
         mibo.promiseq.admin_user_login = ajp;
