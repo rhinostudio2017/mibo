@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="shortcut icon" href="mibo48.png">
     <title>Mibo | Chinese Pink Movie</title>
 </head>
 <body>
