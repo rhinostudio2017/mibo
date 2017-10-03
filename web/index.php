@@ -3,6 +3,8 @@
 require __DIR__ . '/../class/Common/autoload.php';
 require __DIR__ . '/../config/web.conf.php';
 
+header('Access-Control-Allow-Origin:*');
+
 $router = new \FS\Common\Router();
 
 // Path to page mapping

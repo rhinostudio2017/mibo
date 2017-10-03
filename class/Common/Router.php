@@ -50,7 +50,7 @@ class Router
 
     public function execute()
     {
-        $url    = $_SERVER['PATH_INFO'] ?? $_SERVER['REQUEST_URI'];
+        $url    = !empty($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
         foreach ($this->routes as $pattern => $methods) {
             if (preg_match($pattern, $url, $params)) {
