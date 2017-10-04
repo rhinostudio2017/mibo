@@ -51,13 +51,13 @@ class Resource
             $this->setAuthor($data['author']);
         }
 
-        if (isset($data['produceTime'])) {
+        if (!empty($data['produceTime'])) {
             $this->setProduceTime($data['produceTime']);
         } else {
             $this->setProduceTime((new \DateTime())->format('Y-m-d H:i:s'));
         }
 
-        if (isset($data['runTime'])) {
+        if (!empty($data['runTime'])) {
             $this->setRunTime($data['runTime']);
         }
 
@@ -65,7 +65,7 @@ class Resource
             $this->setVenue($data['venue']);
         }
 
-        if (isset($data['views'])) {
+        if (!empty($data['views'])) {
             $this->setViews($data['views']);
         }
 
@@ -97,8 +97,9 @@ class Resource
 
     public function setName($name)
     {
-        if (strlen($name) > 64) {
-            throw new InvalidParameterException('Parameter {name} must less or equal 64 chars');
+        if (strlen($name) > 128) {
+            //throw new InvalidParameterException('Parameter {name} must less or equal 128 chars');
+            $name = substr($name, 0, 128);
         }
 
         $this->name = $name;
@@ -112,7 +113,8 @@ class Resource
     public function setDescription($description)
     {
         if (strlen($description) > 256) {
-            throw new InvalidParameterException('Parameter {description} must less or equal 256 chars');
+            //throw new InvalidParameterException('Parameter {description} must less or equal 256 chars');
+            $description = substr($description, 0, 256);
         }
 
         $this->description = $description;
@@ -125,8 +127,8 @@ class Resource
 
     public function setPosterLink($posterLink)
     {
-        if (strlen($posterLink) > 64) {
-            throw new InvalidParameterException('Parameter {posterLink} must less or equal 64 chars');
+        if (strlen($posterLink) > 128) {
+            throw new InvalidParameterException('Parameter {posterLink} must less or equal 128 chars');
         }
 
         $this->posterLink = $posterLink;

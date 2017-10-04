@@ -144,7 +144,7 @@ mibo.modal = mibo.modal || {
             },
             'name': {
                 'length': function () {
-                    return 64;
+                    return 128;
                 }
             },
             'description': {
@@ -227,7 +227,7 @@ $('#form_search').submit(function (e) {
         typeof search_searchResources == 'function' && search_searchResources();
     } else {
         var data = {}, url = '/search';
-        data.keyword = keyword;
+        data.keyword = $('#search_text').val();
         mibo.util.form.post(url, data);
     }
 

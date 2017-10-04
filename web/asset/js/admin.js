@@ -92,6 +92,7 @@ function admin_fetchResources() {
     data.token = data.token || mibo.config.TOKEN;
     data.offset = pager.getItemStart();
     data.limit = pager.getItemCount();
+    data.keyword = $('#search_text').val().trim() || '';
     var ajp = mibo.util.http.post(mibo.config.API + 'resource/fetch', data);
     mibo.promiseq.admin_resource_fetch = ajp;
     ajp.done(function (data, status, ajXhr) {
@@ -321,15 +322,15 @@ function modalSubmit() {
         // Save resource via api
         mibo.util.loading.show();
         data.token = data.token || mibo.config.TOKEN;
-        data.videoLink = encodeURIComponent($('#ipt_v_url').val());
-        data.posterLink = encodeURIComponent($('#ipt_i_url').val());
-        data.name = $('#ipt_name').val();
-        data.description = $('#ipt_description').val();
-        data.author = $('#ipt_author').val();
-        data.produceTime = $('#ipt_produceTime').val();
-        data.runTime = $('#ipt_runTime').val();
-        data.views = $('#ipt_views').val();
-        data.venue = $('#ipt_venue').val();
+        data.videoLink = encodeURIComponent($('#ipt_v_url').val().trim());
+        data.posterLink = encodeURIComponent($('#ipt_i_url').val().trim());
+        data.name = $('#ipt_name').val().trim();
+        data.description = $('#ipt_description').val().trim();
+        data.author = $('#ipt_author').val().trim();
+        data.produceTime = $('#ipt_produceTime').val().trim();
+        data.runTime = $('#ipt_runTime').val().trim();
+        data.views = $('#ipt_views').val().trim();
+        data.venue = $('#ipt_venue').val().trim();
         var ajp = mibo.util.http.post(url, data);
         mibo.promiseq.admin_user_login = ajp;
         ajp.done(function (data, status, ajXhr) {
@@ -364,7 +365,7 @@ function modalValidate() {
         return 'Poster URL cannot be empty, and the length must less than ' + mibo.modal.resource.posterLink.length() + '.';
     }
     if (name.trim() == '' || name.trim().length > mibo.modal.resource.name.length()) {
-        return 'Video name cannot be empty, and the length must less than ' + mibo.modal.resource.videoLink.length() + '.';
+        return 'Video name cannot be empty, and the length must less than ' + mibo.modal.resource.name.length() + '.';
     }
     return true;
 }
