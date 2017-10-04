@@ -218,12 +218,6 @@ $(window).bind('load', stikyFooter);
 // Search form
 $('#form_search').submit(function (e) {
     e.preventDefault();
-    /*
-    var keyword = $('#search_text').val();
-    if (!keyword.trim()) {
-        return;
-    }
-    */
     var page = $('#page').val();
     if (page == 'admin') {
          typeof admin_fetchResources == 'function' && admin_fetchResources();

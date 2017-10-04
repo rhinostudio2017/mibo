@@ -1,0 +1,32 @@
+{
+  "name": "mibo",
+  "version": "1.0.0",
+  "description": "mibo is free site that collect free home made video by Chinese girls.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@rs.github.com:rhinostudio2017/mibo.git"
+  },
+  "keywords": [
+    "Chinese",
+    "video",
+    "free"
+  ],
+  "author": "rhinostudio",
+  "license": "ISC",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0"
+  }
+}

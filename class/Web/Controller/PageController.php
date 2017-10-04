@@ -10,7 +10,7 @@ class PageController
     public function __construct()
     {
         if (defined('ENV') && ENV == 'live') {
-            $this->assetRoot = '/bin/';
+            $this->assetRoot = '/build/';
         }
     }
 
