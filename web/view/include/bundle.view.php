@@ -39,7 +39,7 @@ if (defined('ENV') && ENV === 'test') {
 } else {
 ?>
 <!-- bundled minimum external asset -->
-    <script rel="text/javascript" src="<?php echo $asset?>css/bundle.min.css"></script>
+    <link rel="stylesheet" href="<?php echo $asset?>css/bundle.min.css">
     <script rel="text/javascript" src="<?php echo $asset?>js/bundle.min.js"></script>
 <?php
 }
