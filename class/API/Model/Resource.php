@@ -235,10 +235,12 @@ class Resource
     #endregion
 
     #region Utils
-    private function validateDateTime($datetime)
+    private function validateDateTime(&$datetime)
     {
+        // Replace mis-spelling (`;`, `-` etc) to `:`
+        $datetime = str_replace(';', ':', $datetime);
         // Datetime validation, e.g. 2017-03-27 12:23:00
-        $preg = '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/';
+        $preg = '/^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?$/';
 
         return preg_match($preg, $datetime) === 1;
     }

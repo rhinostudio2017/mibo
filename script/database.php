@@ -37,7 +37,7 @@ if ($pdo === null) {
 $sql = "CREATE TABLE IF NOT EXISTS `resource` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `name` VARCHAR(128) NOT NULL DEFAULT '',
-            `description` VARCHAR(256) NOT NULL DEFAULT '',
+            `description` TEXT NOT NULL,
             `poster_link` VARCHAR(64) NOT NULL DEFAULT '',
             `video_link` VARCHAR(128) NOT NULL DEFAULT '',
             `author` VARCHAR(32) NOT NULL DEFAULT '',

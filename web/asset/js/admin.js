@@ -272,7 +272,7 @@ function admin_attachEvent() {
     });
     $('#page_go').click(function (e) {
         var pageNumber = ~~$('#page_number').val();
-        if (pageNumber  == 0 || pageNumber > pager.getTotalPage()) {
+        if (pageNumber == 0 || pageNumber > pager.getTotalPage()) {
             mibo.util.system.error('Please input an page number between 1 and ' + pager.getTotalPage());
             return;
         }
@@ -291,14 +291,12 @@ function modalInit() {
     } else if (data['mode'] == 'edit') {
         // For edit mode
         [
-            {'key': 'videoLink', 'label': 'ipt_v_url'}, {'key': 'posterLink', 'label': 'ipt_i_url'}, {
-            'key': 'name',
-            'label': 'ipt_name'
-        },
-            {'key': 'description', 'label': 'ipt_description'}, {'key': 'author', 'label': 'ipt_author'}, {
-            'key': 'venue',
-            'label': 'ipt_venue'
-        }].forEach(function (object) {
+            {'key': 'videoLink', 'label': 'ipt_v_url'}, {'key': 'posterLink', 'label': 'ipt_i_url'},
+            {'key': 'name', 'label': 'ipt_name'}, {'key': 'description', 'label': 'ipt_description'},
+            {'key': 'author', 'label': 'ipt_author'}, {'key': 'produceTime', 'label': 'ipt_produceTime'},
+            {'key': 'runTime', 'label': 'ipt_runTime'}, {'key': 'views', 'label': 'ipt_views'},
+            {'key': 'venue', 'label': 'ipt_venue'}
+        ].forEach(function (object) {
             data['data'][object['key']] && $('#' + object['label']).val(data['data'][object['key']]);
         });
     }
@@ -345,8 +343,8 @@ function modalSubmit() {
             mibo.util.loading.hide();
             $('#resource_dialog').modal('hide');
             admin_fetchResources();
-        }).fail(function () {
-            mibo.util.system.error();
+        }).fail(function (xhr, status, error) {
+            mibo.util.system.error('Status: ' + status + '<br>Message: ' + error);
         });
     }, cb_add_edit_no = function () {
         $('#resource_dialog').modal({'backdrop': 'static'});
