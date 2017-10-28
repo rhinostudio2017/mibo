@@ -288,6 +288,7 @@ function modalInit() {
     if (data['mode'] == 'add') {
         // For add mode
         $('#resource_dialog input').val('');
+        $('#resource_dialog input#ipt_name').val('Chinese homemade video');
     } else if (data['mode'] == 'edit') {
         // For edit mode
         [
